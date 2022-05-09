@@ -9,6 +9,7 @@ export interface IUserCreateData  {
 export interface IDataUserModel {
   id: string;
   name: string;
+  username: string;
   email: string;
   password: string;
   isAdmin: boolean;

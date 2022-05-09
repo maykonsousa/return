@@ -11,8 +11,7 @@ export class SendRequestController {
 
 const sendRequestUseCase = container.resolve(SendRequestUseCase);
     const { type, comment, screenshot } = req.body;
-    const userId = 'b29e9757-082e-492e-a5fb-217322502fd2';
-
+    const userId = "ba179af1-4fe3-42ee-b6c1-e6e29b8bf7ea";
     try {
     
 
@@ -32,7 +31,7 @@ const sendRequestUseCase = container.resolve(SendRequestUseCase);
      if(error instanceof Error) {
        return res.status(400).json({error: error.message});
     }
-    return res.status(500).json({error: 'Internal server error'});
+    return res.status(500).json(error);
   }
 }
 }
