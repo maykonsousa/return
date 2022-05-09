@@ -16,6 +16,11 @@ export interface IDataRequestModel {
 
 }
 
+interface UpdateRequestData {
+  comment: string;
+  id: string;
+}
+
 export interface IRequestsRepository {
   create: (data: IRequestCreateData) => Promise<IDataRequestModel>;
 
@@ -25,7 +30,7 @@ export interface IRequestsRepository {
 
   getByType: (type: string) => Promise<IDataRequestModel[]>;
 
-  update: (id: string, comment: string) => Promise<IDataRequestModel>;
+  update: ({id, comment}:UpdateRequestData) => Promise<IDataRequestModel>;
 
   delete: (id: string) => Promise<void>;
 

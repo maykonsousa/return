@@ -4,7 +4,7 @@ import { IDataRequestModel, IRequestCreateData, IRequestsRepository } from "../R
 interface UpdateData{
   
   comment: string;
-  screenshot?: string;
+  id: string;
 }
 
 export class PrismaRequestsRepository implements IRequestsRepository {
@@ -39,7 +39,7 @@ export class PrismaRequestsRepository implements IRequestsRepository {
     return requests;
   }
 
-  async update(id: string, comment: string): Promise<IDataRequestModel> {
+  async update({id, comment }:UpdateData): Promise<IDataRequestModel> {
     const request = await prisma.request.update({
       where: {id},
       data: {
