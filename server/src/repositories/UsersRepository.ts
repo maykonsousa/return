@@ -1,8 +1,9 @@
 export interface IUserCreateData  {
   name: string;
-  userId: string;
+  username: string;
   email: string;
   password: string;
+  isAdmin: boolean;
 }
 
 export interface IDataUserModel {
@@ -10,7 +11,7 @@ export interface IDataUserModel {
   name: string;
   email: string;
   password: string;
-  isAdmin: string;
+  isAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;
 
@@ -26,11 +27,7 @@ interface UpdateUserData {
 export interface IUsersRepository {
   create: (data: IUserCreateData) => Promise<IDataUserModel>;
 
-  getAll: () => Promise<IDataUserModel[]>;
-
   getById: (id: string) => Promise<IDataUserModel>;
-
-  getByType: (type: string) => Promise<IDataUserModel[]>;
 
   update: (data: UpdateUserData) => Promise<IDataUserModel>;
 
