@@ -1,5 +1,8 @@
+import "reflect-metadata";
+
 import express from 'express';
 import cors from 'cors';
+import "./shared/tsyringe/container"
 import { routes } from './routes';
 
 const app = express();
