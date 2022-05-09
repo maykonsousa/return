@@ -3,18 +3,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand:{
-          500: "#8257e6",
-          400: "#996dff",
-
-
-
+        brand: {
+          300: '#996dff',
+          500: '#8257e6',
         }
+      },
+      borderRadius: {
+        md: '4px'
       }
     },
-    borderRadius:{
-      md: '4px'
-    }
   },
   plugins: [
     require('@tailwindcss/forms'),

@@ -6,5 +6,5 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     color: theme.colors.text_secondary,
     fontFamily: theme.fonts.medium,
-  }
+  },
 });
