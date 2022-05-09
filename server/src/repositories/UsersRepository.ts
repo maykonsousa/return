@@ -28,6 +28,8 @@ export interface IUsersRepository {
   create: (data: IUserCreateData) => Promise<IDataUserModel>;
 
   getById: (id: string) => Promise<IDataUserModel>;
+  getByEmail: (email: string) => Promise<IDataUserModel>;
+  getAll: () => Promise<IDataUserModel[]>;
 
   update: (data: UpdateUserData) => Promise<IDataUserModel>;
 

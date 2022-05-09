@@ -11,8 +11,7 @@ interface UpdateData{
 }
 
 export class PrismaUsersRepository implements IUsersRepository {
-;
-  
+    
   async create({ name, email, username, password, isAdmin }: IUserCreateData): Promise<IDataUserModel> {
     const user = await prisma.user.create({
       data:{
@@ -37,6 +36,12 @@ export class PrismaUsersRepository implements IUsersRepository {
     return User;
   }
 
+  async getByEmail(email: string): Promise<IDataUserModel> {
+    const User = await prisma.user.findFirst({where: { email }}).then((User) => User as IDataUserModel);
+    return User;
+  }
+
+ 
 
 
   async update({id, name, email, password }:UpdateData): Promise<IDataUserModel> {
