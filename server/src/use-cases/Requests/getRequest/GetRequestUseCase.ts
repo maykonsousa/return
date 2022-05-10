@@ -1,5 +1,5 @@
-import { IDataRequestModel, IRequestsRepository } from "repositories/RequestsRepository";
 import { inject, injectable } from "tsyringe";
+import { IDataRequestModel, IRequestsRepository } from "../../../repositories/RequestsRepository";
 
 
 @injectable()

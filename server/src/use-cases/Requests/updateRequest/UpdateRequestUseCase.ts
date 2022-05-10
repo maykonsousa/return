@@ -1,5 +1,5 @@
-import { IRequestsRepository } from "repositories/RequestsRepository";
 import { inject, injectable } from "tsyringe";
+import { IRequestsRepository } from "../../../repositories/RequestsRepository";
 
 interface IUpdateRequestDTO {
   requestId: string;
