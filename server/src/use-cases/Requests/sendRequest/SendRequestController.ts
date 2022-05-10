@@ -11,7 +11,7 @@ export class SendRequestController {
 
 const sendRequestUseCase = container.resolve(SendRequestUseCase);
     const { type, comment, screenshot } = req.body;
-    const userId = "ba179af1-4fe3-42ee-b6c1-e6e29b8bf7ea";
+    const userId = req.user.id;
     try {
     
 

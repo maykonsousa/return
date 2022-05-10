@@ -1,13 +1,14 @@
+import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { prisma } from "../../prisma";
 import { IDataRequestModel, IRequestCreateData, IRequestsRepository } from "../RequestsRepository";
 
 interface UpdateData{
-  
+  requestId: string;
   comment: string;
-  id: string;
 }
 
 export class PrismaRequestsRepository implements IRequestsRepository {
+  
 ;
   
   async create({ userId, type, comment, screenshot }: IRequestCreateData): Promise<IDataRequestModel> {
@@ -39,9 +40,14 @@ export class PrismaRequestsRepository implements IRequestsRepository {
     return requests;
   }
 
-  async update({id, comment }:UpdateData): Promise<IDataRequestModel> {
+  async getByUserId(userId: string): Promise<IDataRequestModel[]> {
+    const requests = await prisma.request.findMany({where: {userId}}).then((requests) => requests as IDataRequestModel[]);
+    return requests;
+  }
+
+  async update({requestId, comment }:UpdateData): Promise<IDataRequestModel> {
     const request = await prisma.request.update({
-      where: {id},
+      where: {id: requestId},
       data: {
         comment
       }

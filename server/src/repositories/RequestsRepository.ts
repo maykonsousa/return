@@ -9,7 +9,7 @@ export interface IDataRequestModel {
   id: string;
   type: string;
   comment: string;
-  screenshot?: string;
+  screenshot: string;
   userId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -17,8 +17,8 @@ export interface IDataRequestModel {
 }
 
 interface UpdateRequestData {
+  requestId: string;
   comment: string;
-  id: string;
 }
 
 export interface IRequestsRepository {
@@ -30,7 +30,9 @@ export interface IRequestsRepository {
 
   getByType: (type: string) => Promise<IDataRequestModel[]>;
 
-  update: ({id, comment}:UpdateRequestData) => Promise<IDataRequestModel>;
+  getByUserId: (userId: string) => Promise<any[]>;
+
+  update: (data: UpdateRequestData) => Promise<IDataRequestModel>;
 
   delete: (id: string) => Promise<void>;
 
