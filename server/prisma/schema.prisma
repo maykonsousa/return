@@ -25,12 +25,14 @@ model User {
 }
 
 model Request {
-  id         String  @id @default(uuid())
+  id         String   @id @default(uuid())
   userId     String
   type       String
   comment    String
   screenshot String?
-  User       User    @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  User       User     @relation(fields: [userId], references: [id])
 
   @@map("requests")
 }
