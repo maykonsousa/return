@@ -16,7 +16,7 @@ export const EnsureAuthenticated = async (req:Request, res:Response, next:NextFu
   const [, token] = authHeader.split(" ");
 
   try {
-    const {sub:user_id} = verify(token, `e91ddb53294154a97d3d0bdb39e75024` ) as IPayload;
+    const {sub:user_id} = verify(token, `${process.env.TOKEN_SECRET}` ) as IPayload;
     
     const usersRepository = new PrismaUsersRepository();
     const user = await usersRepository.getById(user_id);

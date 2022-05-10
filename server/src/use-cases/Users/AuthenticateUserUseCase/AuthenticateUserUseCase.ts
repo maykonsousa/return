@@ -31,7 +31,7 @@ export class AuthenticateUserUseCase {
 
     if(!user || !paswordMatched) throw new Error("Invalid credentials"); 
 
-    const token = sign({}, `e91ddb53294154a97d3d0bdb39e75024`, {
+    const token = sign({}, `${process.env.TOKEN_SECRET}`, {
       subject: user.id,
       expiresIn: `${process.env.TOKEN_EXPIRES_IN}`,
 
