@@ -11,8 +11,8 @@ export const LoginUserService = async ({email, password}:IResquestProps) => {
       email,
       password
     }).then(res => res.data);
-    console.log(response)
+    return {type: "success", data: response, message: "Seja bem-vindo"}
   } catch (error) {
-    console.log("deu erro")
+    return {type: "error", data: null, message: "Usuário ou senha inválidos. Verifique se os dados digitados estão corretos"}
   }
 }
