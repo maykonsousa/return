@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "../components/formComponents/Input";
 import { SearchButton } from "../components/formComponents/SeachButton";
-import { StoreContext } from "../store/Context";
+import { IGithubUser, StoreContext } from "../store/Context";
 import { SubmitButton } from "../components/formComponents/SubmitButton";
 import { CreateuserService } from "../services/CreateuserService";
 import LogoImg from "../assets/nlw.svg";
@@ -24,6 +24,12 @@ export const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setGithubUser, githubUser, handleAlert } = useContext(StoreContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (githubUser) {
+      setGithubUser({} as IGithubUser);
+    }
+  }, [githubUser]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,

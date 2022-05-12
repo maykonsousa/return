@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { CoursesContainer } from "../components/Courses/CoursesContainer";
 import { NavBar } from "../components/Navbar/Index";
+import { RequestsContainer } from "../components/Requests/RequestsContainer";
 import { Widget } from "../components/Widget";
 
-export const Dashboard = () => {
+export const Requests = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const Dashboard = () => {
   return (
     <>
       <NavBar />
-      <CoursesContainer />
+      <RequestsContainer />
       <Widget />
     </>
   );

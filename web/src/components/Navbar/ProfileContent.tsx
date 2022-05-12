@@ -1,6 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { api } from "../../lib/api";
+import { useContext, useEffect, useState } from "react";
+import { StoreContext } from "../../store/Context";
 import CardProfile from "./CardProfile";
 
 export interface IUserData {
@@ -14,17 +13,8 @@ export interface IUserData {
 }
 
 export const ProfileContent = () => {
-  const [user, setUser] = useState<IUserData>({} as IUserData);
-
+  const { githubUser } = useContext(StoreContext);
   const [showCardProfile, setShowCardProfile] = useState(false);
-  const getGithub = async () => {
-    const { data } = await axios.get(
-      "https://api.github.com/users/maykonsousa"
-    );
-    setUser(data);
-  };
-
-  getGithub();
 
   useEffect(() => {
     if (showCardProfile) {
@@ -52,8 +42,8 @@ export const ProfileContent = () => {
           aria-hidden="true"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
           />
         </svg>
@@ -69,13 +59,13 @@ export const ProfileContent = () => {
             <span className="sr-only border-red-500">Open user menu</span>
             <img
               className="h-8 w-8 rounded-full"
-              src={user?.avatar_url}
+              src={githubUser?.avatar_url}
               alt=""
             />
           </button>
         </div>
 
-        {showCardProfile ? <CardProfile {...user} /> : null}
+        {showCardProfile ? <CardProfile /> : null}
       </div>
     </div>
   );

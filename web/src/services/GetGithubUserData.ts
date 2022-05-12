@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api } from "../lib/api";
+
 
 export const getGithubData = async (username:string) => {
   

@@ -1,7 +1,8 @@
 import { ArrowLeft } from "phosphor-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { FeedbackType, feedbackTypes } from "..";
 import { api } from "../../../lib/api";
+import { StoreContext } from "../../../store/Context";
 import { CloseButton } from "../../CloseButton";
 import { Loading } from "../../Loading";
 import { ScreenshotButton } from "../ScreenshotButton";
@@ -20,6 +21,7 @@ export function FeedbackContentStep({
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [comment, setComment] = useState("");
   const [isSendingFeedback, setIsSendingFeedback] = useState(false);
+  const { refreshList, setRefreshList } = useContext(StoreContext);
 
   const feedbackTypeInfo = feedbackTypes[feedbackType];
 
@@ -28,11 +30,12 @@ export function FeedbackContentStep({
 
     setIsSendingFeedback(true);
 
-    await api.post("/feedbacks", {
+    await api.post("/requests", {
       type: feedbackType,
       comment,
       screenshot,
     });
+    setRefreshList(!refreshList);
 
     setIsSendingFeedback(false);
     onFeedbackSent();

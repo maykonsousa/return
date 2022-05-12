@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "../components/Alerts/Alert";
 import { StoreContext } from "../store/Context";
 import LogoImg from "../assets/nlw.svg";
 import { Input } from "../components/formComponents/Input";
 import { SubmitButton } from "../components/formComponents/SubmitButton";
-import { LoginUserService } from "../services/LoginUserService";
 
 const initialState = {
   email: "",
@@ -14,6 +13,15 @@ const initialState = {
 
 export const SignIn = () => {
   const [values, setValues] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { handleLogin } = useContext(StoreContext);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -37,7 +45,9 @@ export const SignIn = () => {
             className="mt-6"
             onSubmit={async (event) => {
               event.preventDefault();
-              await LoginUserService(values);
+              setIsLoading(true);
+              await handleLogin(values);
+              setIsLoading(false);
             }}
           >
             <Input
@@ -49,6 +59,7 @@ export const SignIn = () => {
               placeholder="Password"
               onChange={(event) => handleChange(event, "password")}
               value={values.password}
+              type="password"
             />
             <SubmitButton text="Entrar" loading={false} />
           </form>

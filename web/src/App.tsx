@@ -4,9 +4,7 @@ import { StoreProvider } from "./store/Context";
 export function App() {
   return (
     <>
-      <StoreProvider>
-        <Router />
-      </StoreProvider>
+      <Router />
     </>
   );
 }

@@ -1,10 +1,20 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { api } from "../lib/api";
+import { LoginUserService } from "../services/LoginUserService";
+import { useNavigate } from "react-router-dom";
+import { getGithubData } from "../services/GetGithubUserData";
+import { GetRequestsService } from "../services/getRequestsService";
 
 type IContextProps = {
   children: React.ReactNode;
 };
 
-type IGithubUser = {
+type ILoginProps = {
+  email: string;
+  password: string;
+};
+
+export type IGithubUser = {
   login: string;
   id: number;
   node_id: string;
@@ -54,8 +64,9 @@ type IUserProps = {
 type IRequestsProps = {
   id: string;
   userId: string;
-  coment: string;
+  comment: string;
   screenshot: string;
+  type: "BUG" | "IDEA" | "OTHER";
 };
 
 type IContextTypes = {
@@ -74,6 +85,8 @@ type IContextTypes = {
   setRefreshList: (newRefreshList: boolean) => void;
   setGithubUser: (newGithubUser: IGithubUser) => void;
   handleAlert: (data: IAlertProps) => void;
+  handleLogin: (data: ILoginProps) => Promise<void>;
+  handleLogout: () => void;
 };
 
 const initialValues = {
@@ -93,6 +106,8 @@ const initialValues = {
   setGithubUser: () => {},
   setEnableAlert: () => {},
   handleAlert: () => {},
+  handleLogin: () => Promise.resolve(),
+  handleLogout: () => {},
 };
 
 export const StoreContext = createContext<IContextTypes>(initialValues);
@@ -106,7 +121,74 @@ export const StoreProvider = ({ children }: IContextProps) => {
   const [enableAlert, setEnableAlert] = useState<boolean>(false);
   const [showAlert, setShowAlert] = useState<boolean>(true);
   const [alertData, setAlertData] = useState<IAlertProps>({} as IAlertProps);
+  const navigate = useNavigate();
 
+  const getRequests = async () => {
+    const response = await GetRequestsService();
+    if (response.type === "success") {
+      setRequests(response.data);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      getRequests();
+    }
+  }, [user, refreshList, token]);
+
+  const getGithubUser = async (username: string) => {
+    if (user) {
+      const { data } = await getGithubData(username);
+      setGithubUser(data);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userLoged = token
+      ? JSON.parse(localStorage.getItem("user") || "{}")
+      : {};
+    if (token) {
+      setToken(token);
+      setUser(userLoged);
+      api.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+        token
+      )}`;
+      getGithubUser(userLoged.username);
+    }
+  }, [token]);
+
+  const handleLogin = async ({ email, password }: ILoginProps) => {
+    const response = await LoginUserService({ email, password });
+    const { data, type, message } = response;
+    if (type === "success") {
+      setToken(data.token);
+      setUser({ ...user, ...data.user });
+      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("user", JSON.stringify(data.user));
+      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+      handleAlert({
+        type,
+        message,
+      });
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    }
+    handleAlert({
+      type,
+      message,
+    });
+  };
+
+  const handleLogout = () => {
+    setToken("");
+    setUser({} as IUserProps);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    api.defaults.headers.common["Authorization"] = "";
+    navigate("/");
+  };
   const handleAlert = ({ type = "default", message }: IAlertProps) => {
     setAlertData({ type, message });
     setShowAlert(true);
@@ -133,6 +215,8 @@ export const StoreProvider = ({ children }: IContextProps) => {
         handleAlert,
         showAlert,
         alertData,
+        handleLogin,
+        handleLogout,
       }}
     >
       {children}
