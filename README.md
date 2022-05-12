@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/images/logo.png" height="100px" alt="Next Controll"/>
+  <img src="./web/src/assets/nlw.svg" height="100px" alt="Next Controll"/>
 </div>
 
 <div align="center">
@@ -8,6 +8,8 @@
   Trata- se uma aplicação que foi desenvolvida na Edição 8 da NLW promovida pela escola de desenvolvimento [Rocketseat](https://www.rocketseat.com.br/). Nesta Edição foi contruído um backend em NodeJS, uma Aplicação Web em ReactJs e um app mobile em React Native.
 
   No final do treinamento foi proposto uma Milha Extra, onde fomos desafiados a imcrementar esse projeto com features novas.
+
+  Nesse sentido optei por construir uma plataforma de cursos online onde o aluno pode se cadastrar, logar e uma vez logado tem acesso às aulas e também pode fazer solicitações que são enviadas para o email mas são acessíveis e gerenciáveis pelo próprio aluno através da plataforma.
 
 
 
@@ -75,15 +77,14 @@ Na aplicação mobile não tivemos tempo de implementar nada novo mas vai ficar 
 
 ***
 
+## Links
+
+**website**:[https://return-maykonsousa.vercel.app/](https://return-maykonsousa.vercel.app/) 
+
+
+***
 ## CONTATOS
 
-**website**:[http://maykonsousa.github.io](http://maykonsousa.github.io/)  
-**LinkedIn**: [https://www.linkedin.com/in/maykonsousa](https://www.linkedin.com/in/maykonsousa/)  
-**Whatsapp**: 61 992943297  
-
-
-## CONTATOS
-
-**website**:[http://maykonsousa.github.io](http://maykonsousa.github.io/)  
+**Portifolio**:[http://maykonsousa.github.io](http://maykonsousa.github.io/)  
 **LinkedIn**: [https://www.linkedin.com/in/maykonsousa](https://www.linkedin.com/in/maykonsousa/)  
 **Whatsapp**: 61 992943297
