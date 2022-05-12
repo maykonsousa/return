@@ -26,10 +26,14 @@ export const SignUp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (githubUser) {
+    if (username) {
       setGithubUser({} as IGithubUser);
     }
-  }, [githubUser]);
+  }, [username]);
+
+  useEffect(() => {
+    setUsername("");
+  }, []);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -47,6 +51,7 @@ export const SignUp = () => {
       message,
     });
     setGithubUser(data);
+    setUsername("");
   };
 
   useEffect(() => {
