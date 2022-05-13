@@ -9,20 +9,14 @@ export const MenuMobile = () => {
   useEffect(() => {
     if (isOpenMobile) {
       setComponent(
-        <div className="z-[-9] absolute top-20" id="mobile-menu">
+        <div className="absolute top-20">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
-              to={`/dashboard`}
-              className=" text-white block px-3 py-2 rounded-md text-base font-medium"
-              aria-current="page"
+              to="/dashboard"
+              className=" text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
               Aulas
             </Link>
-
-            <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            ></a>
 
             <a
               href="#"
@@ -32,7 +26,7 @@ export const MenuMobile = () => {
             </a>
 
             <Link
-              to={`/requests`}
+              to="/requests"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
               Minhas solicitações
