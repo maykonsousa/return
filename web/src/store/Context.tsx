@@ -4,6 +4,8 @@ import { LoginUserService } from "../services/LoginUserService";
 import { useNavigate } from "react-router-dom";
 import { getGithubData } from "../services/GetGithubUserData";
 import { GetRequestsService } from "../services/getRequestsService";
+import { DeleteRequestService } from "../services/DeleteRequestService";
+import { CreateRequestService } from "../services/CreateRequestService";
 
 type IContextProps = {
   children: React.ReactNode;
@@ -49,6 +51,12 @@ export type IGithubUser = {
   updated_at: string;
 };
 
+type ISentRequestDataProps = {
+  type: string;
+  comment: string;
+  screenshot: string | null;
+};
+
 type IAlertProps = {
   message?: string;
   type: "success" | "warning" | "error" | "info" | "default" | string;
@@ -87,6 +95,8 @@ type IContextTypes = {
   handleAlert: (data: IAlertProps) => void;
   handleLogin: (data: ILoginProps) => Promise<void>;
   handleLogout: () => void;
+  handleDeleteRequest: (id: string) => Promise<void>;
+  handleSentRequest: (data: ISentRequestDataProps) => Promise<void>;
 };
 
 const initialValues = {
@@ -108,6 +118,8 @@ const initialValues = {
   handleAlert: () => {},
   handleLogin: () => Promise.resolve(),
   handleLogout: () => {},
+  handleDeleteRequest: () => Promise.resolve(),
+  handleSentRequest: () => Promise.resolve(),
 };
 
 export const StoreContext = createContext<IContextTypes>(initialValues);
@@ -130,33 +142,12 @@ export const StoreProvider = ({ children }: IContextProps) => {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      getRequests();
-    }
-  }, [user, refreshList, token]);
-
   const getGithubUser = async (username: string) => {
     if (user) {
       const { data } = await getGithubData(username);
       setGithubUser(data);
     }
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userLoged = token
-      ? JSON.parse(localStorage.getItem("user") || "{}")
-      : {};
-    if (token) {
-      setToken(token);
-      setUser(userLoged);
-      api.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
-        token
-      )}`;
-      getGithubUser(userLoged.username);
-    }
-  }, [token]);
 
   const handleLogin = async ({ email, password }: ILoginProps) => {
     const response = await LoginUserService({ email, password });
@@ -197,6 +188,63 @@ export const StoreProvider = ({ children }: IContextProps) => {
       setShowAlert(false);
     }, 3000);
   };
+
+  const handleSentRequest = async ({
+    type,
+    comment,
+    screenshot,
+  }: ISentRequestDataProps) => {
+    const response = await CreateRequestService({ type, comment, screenshot });
+    if (response.type === "success") {
+      setRequests([...requests, response.data]);
+      handleAlert({
+        type: response.type,
+        message: response.message,
+      });
+    }
+    handleAlert({
+      type: response.type,
+      message: response.message,
+    });
+  };
+
+  const handleDeleteRequest = async (id: string) => {
+    const { message, type } = await DeleteRequestService(id);
+    if (type === "success") {
+      setRequests(requests.filter((request) => request.id !== id));
+      handleAlert({
+        type,
+        message,
+      });
+      return;
+    }
+    handleAlert({
+      type,
+      message,
+    });
+  };
+
+  useEffect(() => {
+    if (token) {
+      getRequests();
+    }
+  }, [user, refreshList, token]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userLoged = token
+      ? JSON.parse(localStorage.getItem("user") || "{}")
+      : {};
+    if (token) {
+      setToken(token);
+      setUser(userLoged);
+      api.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+        token
+      )}`;
+      getGithubUser(userLoged.username);
+    }
+  }, [token]);
+
   return (
     <StoreContext.Provider
       value={{
@@ -217,6 +265,8 @@ export const StoreProvider = ({ children }: IContextProps) => {
         alertData,
         handleLogin,
         handleLogout,
+        handleDeleteRequest,
+        handleSentRequest,
       }}
     >
       {children}
