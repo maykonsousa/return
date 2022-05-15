@@ -44,25 +44,25 @@ Na aplicação mobile não tivemos tempo de implementar nada novo mas vai ficar 
 
 ## Check List
 
-- [ ] [BACK-END] - Implementar controllers
-- [ ] [BACK-END] - Criar model de Usuários
-- [ ] [BACK-END] - Implementar novos métodos nos repositorios
-- [ ] [BACK-END] - Implementar autenticação JWT
-- [ ] [BACK-END] - Injeção de dependências
-- [ ] [BACK-END] - Criação do Middleware de autenticação
+- [x] [BACK-END] - Implementar controllers
+- [x] [BACK-END] - Criar model de Usuários
+- [x] [BACK-END] - Implementar novos métodos nos repositorios
+- [x] [BACK-END] - Implementar autenticação JWT
+- [x] [BACK-END] - Injeção de dependências
+- [x] [BACK-END] - Criação do Middleware de autenticação
 - [ ] [BACK-END] - Implementar testes automatizados
   
 ***
 
-- [ ] [FRONT-END] - Criar página de Login
-- [ ] [FRONT-END] - Criar página de Cadatro
-- [ ] [FRONT-END] - Criar Dashboard das aulas
-- [ ] [FRONT-END] - Criar pagina de solicitações
-- [ ] [FRONT-END] - Implementar barra de navegação
-- [ ] [FRONT-END] - Implementar perfil
-- [ ] [FRONT-END] - Resposividade
-- [ ] [FRONT-END] - ContextAPI
-- [ ] [FRONT-END] - Funcionalidade de remover solicitação
+- [x] [FRONT-END] - Criar página de Login
+- [x] [FRONT-END] - Criar página de Cadatro
+- [x] [FRONT-END] - Criar Dashboard das aulas
+- [x] [FRONT-END] - Criar pagina de solicitações
+- [x] [FRONT-END] - Implementar barra de navegação
+- [x] [FRONT-END] - Implementar perfil
+- [x] [FRONT-END] - Resposividade
+- [x] [FRONT-END] - ContextAPI
+- [x] [FRONT-END] - Funcionalidade de remover solicitação
 - [ ] [FRONT-END] - Funcionalidade de atualizar conta
   
 
