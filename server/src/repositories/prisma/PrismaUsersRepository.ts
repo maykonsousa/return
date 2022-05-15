@@ -13,7 +13,7 @@ interface UpdateData{
 export class PrismaUsersRepository implements IUsersRepository {
     
   async create({ name, email, username, password, isAdmin }: IUserCreateData): Promise<IDataUserModel> {
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data:{
         name,
         email,
@@ -27,17 +27,17 @@ export class PrismaUsersRepository implements IUsersRepository {
   }
 
   async getAll(): Promise<IDataUserModel[]> {
-    const Users = await prisma.user.findMany().then((Users) => Users as IDataUserModel[]);
+    const Users = await prisma.users.findMany().then((Users) => Users as IDataUserModel[]);
     return Users;
   }
 
   async getById(id: string): Promise<IDataUserModel> {
-    const User = await prisma.user.findUnique({where: {id}}).then((User) => User as IDataUserModel);
+    const User = await prisma.users.findUnique({where: {id}}).then((user) => user as IDataUserModel);
     return User;
   }
 
   async getByEmail(email: string): Promise<IDataUserModel> {
-    const User = await prisma.user.findFirst({where: { email }}).then((User) => User as IDataUserModel);
+    const User = await prisma.users.findFirst({where: { email }}).then((user) => user as IDataUserModel);
     return User;
   }
 
@@ -45,7 +45,7 @@ export class PrismaUsersRepository implements IUsersRepository {
 
 
   async update({id, name, email, password }:UpdateData): Promise<IDataUserModel> {
-    const User = await prisma.user.update({
+    const User = await prisma.users.update({
       where: {id},
       data: {
         name,
@@ -58,7 +58,7 @@ export class PrismaUsersRepository implements IUsersRepository {
 }
 
   async delete(id: string): Promise<void> {
-    await prisma.user.delete({
+    await prisma.users.delete({
       where: {id}
     })
 }
