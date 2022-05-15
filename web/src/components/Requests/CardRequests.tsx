@@ -7,7 +7,7 @@ interface IRequestsProps {
   request: {
     id: string;
     userId: string;
-    comment: string;
+    message: string;
     screenshot: string | null;
     type: "BUG" | "IDEA" | "OTHER";
   };
@@ -37,7 +37,7 @@ export const CardRequests = ({ request }: IRequestsProps) => {
         </h5>
 
         <div className="h-[120px] mb-8 overflow-y-auto ">
-          <p className="text-sm">{request.comment}</p>
+          <p className="text-sm">{request.message}</p>
         </div>
 
         <div className="absolute bottom-2 left-5">

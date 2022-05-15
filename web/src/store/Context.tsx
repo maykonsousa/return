@@ -53,7 +53,7 @@ export type IGithubUser = {
 
 type ISentRequestDataProps = {
   type: string;
-  comment: string;
+  message: string;
   screenshot: string | null;
 };
 
@@ -72,7 +72,7 @@ type IUserProps = {
 type IRequestsProps = {
   id: string;
   userId: string;
-  comment: string;
+  message: string;
   screenshot: string;
   type: "BUG" | "IDEA" | "OTHER";
 };
@@ -191,10 +191,10 @@ export const StoreProvider = ({ children }: IContextProps) => {
 
   const handleSentRequest = async ({
     type,
-    comment,
+    message,
     screenshot,
   }: ISentRequestDataProps) => {
-    const response = await CreateRequestService({ type, comment, screenshot });
+    const response = await CreateRequestService({ type, message, screenshot });
     if (response.type === "success") {
       setRequests([...requests, response.data]);
       handleAlert({

@@ -2,7 +2,7 @@ import { api } from "../lib/api";
 
 interface IRequestProps{
   type: string;
-  comment: string;
+  message: string;
   screenshot: string | null;
 
 }
