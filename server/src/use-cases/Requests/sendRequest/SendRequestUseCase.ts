@@ -6,7 +6,7 @@ import {NodemailerMailAdapter} from '../../../adapters/nodemailer/nodemailer-mai
 interface SendRequestUseCaseDTO {
   userId: string;
   type: string;
-  comment: string;
+  message: string;
   screenshot?: string;
 }
 @injectable()
@@ -17,7 +17,7 @@ export class SendRequestUseCase {
   ) {}
 
   async execute(requestData: SendRequestUseCaseDTO) {
-    const { userId, type, comment, screenshot } = requestData;
+    const { userId, type, message, screenshot } = requestData;
 
     const nodemailerMailAdapter = new NodemailerMailAdapter();
     
@@ -30,8 +30,8 @@ export class SendRequestUseCase {
       throw new Error('Type is required.');
     }
 
-    if (!comment) {
-      throw new Error('Comment is required.');
+    if (!message) {
+      throw new Error('message is required.');
     }
 
     if (screenshot && !screenshot.startsWith('data:image/png;base64')) {
@@ -41,7 +41,7 @@ export class SendRequestUseCase {
     const request = await this.requestRepository.create({
       userId,
       type,
-      comment,
+      message,
       screenshot,
     });
 
@@ -51,7 +51,7 @@ export class SendRequestUseCase {
         `<div style="font-family: sans-serif; font-size: 16px; color: #111;">`,
         
         `<p>Tipo do feedback: ${type}</p>`,
-        `<p>Comentário: ${comment}</p>`,
+        `<p>Comentário: ${message}</p>`,
         screenshot ? `<img src="${screenshot}" width={320} />` : ``,
         `</div>`,
       ].join('\n'),

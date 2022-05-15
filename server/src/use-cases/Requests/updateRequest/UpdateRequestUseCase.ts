@@ -3,7 +3,7 @@ import { IRequestsRepository } from "../../../repositories/RequestsRepository";
 
 interface IUpdateRequestDTO {
   requestId: string;
-  comment: string;
+  message: string;
   userId: string;
 }
 
@@ -13,7 +13,7 @@ export class UpdateRequestUseCase {
     @inject("RequestsRepository")
     private requestRepository: IRequestsRepository
   ) {}
-  async execute({requestId, comment, userId}: IUpdateRequestDTO) {
+  async execute({requestId, message, userId}: IUpdateRequestDTO) {
     console.log("requestId", requestId);
     const request= await this.requestRepository.getById(requestId);
         if(!request){
@@ -25,7 +25,7 @@ export class UpdateRequestUseCase {
 
    
    try {
-     const updatedRequest = await this.requestRepository.update({requestId, comment});
+     const updatedRequest = await this.requestRepository.update({requestId, message});
       return updatedRequest;
    } catch (error) {
      throw new Error("unable to update request");

@@ -4,19 +4,19 @@ import { IDataRequestModel, IRequestCreateData, IRequestsRepository } from "../R
 
 interface UpdateData{
   requestId: string;
-  comment: string;
+  message: string;
 }
 
 export class PrismaRequestsRepository implements IRequestsRepository {
   
 ;
   
-  async create({ userId, type, comment, screenshot }: IRequestCreateData): Promise<IDataRequestModel> {
-    const request = await prisma.request.create({
+  async create({ userId, type, message, screenshot }: IRequestCreateData): Promise<IDataRequestModel> {
+    const request = await prisma.requests.create({
       data: {
         userId,
         type,
-        comment,
+        message,
         screenshot,
 
       },
@@ -26,30 +26,30 @@ export class PrismaRequestsRepository implements IRequestsRepository {
   }
 
   async getAll(): Promise<IDataRequestModel[]> {
-    const requests = await prisma.request.findMany().then((requests) => requests as IDataRequestModel[]);
+    const requests = await prisma.requests.findMany().then((requests) => requests as IDataRequestModel[]);
     return requests;
   }
 
   async getById(id: string): Promise<IDataRequestModel> {
-    const request = await prisma.request.findUnique({where: {id}}).then((request) => request as IDataRequestModel);
+    const request = await prisma.requests.findUnique({where: {id}}).then((request) => request as IDataRequestModel);
     return request;
   }
 
   async getByType(type: string): Promise<IDataRequestModel[]> {
-    const requests = await prisma.request.findMany({where: {type}}).then((requests) => requests as IDataRequestModel[]);
+    const requests = await prisma.requests.findMany({where: {type}}).then((requests) => requests as IDataRequestModel[]);
     return requests;
   }
 
   async getByUserId(userId: string): Promise<IDataRequestModel[]> {
-    const requests = await prisma.request.findMany({where: {userId}}).then((requests) => requests as IDataRequestModel[]);
+    const requests = await prisma.requests.findMany({where: {userId}}).then((requests) => requests);
     return requests;
   }
 
-  async update({requestId, comment }:UpdateData): Promise<IDataRequestModel> {
-    const request = await prisma.request.update({
+  async update({requestId, message }:UpdateData): Promise<IDataRequestModel> {
+    const request = await prisma.requests.update({
       where: {id: requestId},
       data: {
-        comment
+        message
       }
     }
     ).then((request) => request as IDataRequestModel);
@@ -57,7 +57,7 @@ export class PrismaRequestsRepository implements IRequestsRepository {
 }
 
   async delete(id: string): Promise<void> {
-    await prisma.request.delete({
+    await prisma.requests.delete({
       where: {id}
     })
 }

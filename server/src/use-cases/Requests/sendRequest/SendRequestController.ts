@@ -10,7 +10,7 @@ export class SendRequestController {
   async handle(req:Request, res:Response) {
 
 const sendRequestUseCase = container.resolve(SendRequestUseCase);
-    const { type, comment, screenshot } = req.body;
+    const { type, message, screenshot } = req.body;
     const userId = req.user.id;
     try {
     
@@ -18,7 +18,7 @@ const sendRequestUseCase = container.resolve(SendRequestUseCase);
       const request = await sendRequestUseCase.execute({
         userId,
         type,
-        comment,
+        message,
         screenshot,
 
       })

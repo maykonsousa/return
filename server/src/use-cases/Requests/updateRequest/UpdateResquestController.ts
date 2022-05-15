@@ -5,14 +5,14 @@ import { UpdateRequestUseCase } from "./UpdateRequestUseCase";
 
 export class UpdateRequestController {
   async handle(req: Request, res: Response) {
-    const { comment } = req.body;
+    const { message } = req.body;
     const { requestId } = req.params;
     const { id:userId } = req.user;
     const updateRequestUseCase = container.resolve(UpdateRequestUseCase);
 try {
   const newRequest = await updateRequestUseCase.execute({
     requestId, 
-    comment, 
+    message, 
     userId});
   return res.status(200).json(newRequest);
 } catch (error) {

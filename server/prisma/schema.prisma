@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id        String   @id @default(uuid())
   name      String
   email     String
@@ -20,19 +20,64 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  Feedback Request[]
+  Requests Requests[]
+  Videos   Videos[]
+  comments Comments[]
+  Likes    Likes[]
   @@map("users")
 }
 
-model Request {
+model Requests {
   id         String   @id @default(uuid())
   userId     String
   type       String
-  comment    String
+  message    String
   screenshot String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
-  User       User     @relation(fields: [userId], references: [id])
+  User       Users    @relation(fields: [userId], references: [id])
 
+  Comments Comments[]
   @@map("requests")
+}
+
+model Videos {
+  id          String   @id @default(uuid())
+  title       String
+  url         String
+  description String
+  isPublic    Boolean
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  User        Users    @relation(fields: [userId], references: [id])
+
+  Likes Likes[]
+  @@map("videos")
+}
+
+model Comments {
+  id        String   @id @default(uuid())
+  userId    String
+  videoId   String
+  requestId String
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  User      Users    @relation(fields: [userId], references: [id])
+  Video     Requests @relation(fields: [requestId], references: [id])
+
+  @@map("comments")
+}
+
+model Likes {
+  id        String   @id @default(uuid())
+  userId    String
+  videoId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  User      Users    @relation(fields: [userId], references: [id])
+  Video     Videos   @relation(fields: [videoId], references: [id])
+
+  @@map("likes")
 }

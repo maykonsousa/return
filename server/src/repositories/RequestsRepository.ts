@@ -1,15 +1,15 @@
 export interface IRequestCreateData  {
   type: string;
   userId: string;
-  comment: string;
+  message: string;
   screenshot?: string;
 }
 
 export interface IDataRequestModel {
   id: string;
   type: string;
-  comment: string;
-  screenshot: string;
+  message: string;
+  screenshot: string | null;
   userId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -18,7 +18,7 @@ export interface IDataRequestModel {
 
 interface UpdateRequestData {
   requestId: string;
-  comment: string;
+  message: string;
 }
 
 export interface IRequestsRepository {
